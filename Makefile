@@ -642,20 +642,21 @@ pkg/pb/%.pb.go: api/%.proto third_party/ build/toolchain/bin/protoc$(EXE_EXTENSI
 csharp/OpenMatch/Annotations.cs: third_party/
 	$(PROTOC) third_party/protoc-gen-swagger/options/annotations.proto \
 		-I $(REPOSITORY_ROOT) -I $(PROTOC_INCLUDES) \
-		--plugin=protoc-gen-grpc=grpc_csharp_plugin \
+		--plugin=protoc-gen-grpc=/Users/joel/.nuget/packages/grpc.tools/1.22.1/tools/macosx_x64/grpc_csharp_plugin \
 		--csharp_out=$(REPOSITORY_ROOT)/csharp/OpenMatch
 
 csharp/OpenMatch/Openapiv2.cs: third_party/
 	$(PROTOC) third_party/protoc-gen-swagger/options/openapiv2.proto \
 		-I $(REPOSITORY_ROOT) -I $(PROTOC_INCLUDES) \
-		--plugin=protoc-gen-grpc=grpc_csharp_plugin \
+		--plugin=protoc-gen-grpc=/Users/joel/.nuget/packages/grpc.tools/1.22.1/tools/macosx_x64/grpc_csharp_plugin \
 		--csharp_out=$(REPOSITORY_ROOT)/csharp/OpenMatch/
 
 csharp/OpenMatch/%.cs: third_party/ build/toolchain/bin/protoc$(EXE_EXTENSION) csharp/OpenMatch/Openapiv2.cs csharp/OpenMatch/Annotations.cs
 	$(PROTOC) api/$(shell echo $(*F)| tr A-Z a-z).proto \
 		-I $(REPOSITORY_ROOT) -I $(PROTOC_INCLUDES) \
-		--plugin=protoc-gen-grpc=grpc_csharp_plugin \
-		--csharp_out=$(REPOSITORY_ROOT)/csharp/OpenMatch
+		--plugin=protoc-gen-grpc=/Users/joel/.nuget/packages/grpc.tools/1.22.1/tools/macosx_x64/grpc_csharp_plugin \
+		--csharp_out=$(REPOSITORY_ROOT)/csharp/OpenMatch \
+		--grpc_out=$(REPOSITORY_ROOT)/csharp/OpenMatch
 
 internal/ipb/%.pb.go: internal/api/%.proto third_party/ build/toolchain/bin/protoc$(EXE_EXTENSION) build/toolchain/bin/protoc-gen-go$(EXE_EXTENSION) build/toolchain/bin/protoc-gen-grpc-gateway$(EXE_EXTENSION)
 	mkdir -p $(REPOSITORY_ROOT)/build/prototmp $(REPOSITORY_ROOT)/internal/ipb
